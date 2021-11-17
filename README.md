@@ -46,6 +46,6 @@ A standard switch capability is provided that can be used in automation conditio
 
 
 #### Responsiveness
-If a device has implemented the full SSDP specification then response times and subsequent updating of device online/offline status will be quick, particularly when the device goes offline.  Well-implemented devices may also report their status more frequently than the polling interval you configure.  So for example, even if you define a polling interval of 15 minutes, the device may choose to report more frequently.  Networking equipment often have very frequent reporting intervals (e.g. every 30-45 seconds), for example.
+Generally, device online/offline status should get initialized within 10 seconds of initially turning on monitoring.  
 
-Generally, status should get updated within 10 seconds of initially turning on monitoring.  
+If a device has implemented the full SSDP specification then response times and subsequent updating of device online/offline status will be quick, particularly when the device goes offline.  Well-implemented devices may also report their status more frequently than the polling interval you configure.  So for example, even if you define a polling interval of 15 minutes, the device may choose to report more frequently.  Networking equipment often have very frequent reporting intervals (e.g. every 30-45 seconds), for example.
