@@ -1,0 +1,36 @@
+dashboard:
+  states:
+    - label: '{{switch.value}}'
+  actions: []
+  basicPlus: []
+detailView:
+  - label: Device Status
+    displayType: toggleSwitch
+    toggleSwitch:
+      command:
+        name: setSwitch
+        'on': 'on'
+        'off': 'off'
+        argumentType: string
+      state:
+        value: switch.value
+        valueType: string
+        'on': 'LAN Device On'
+        'off': 'LAN Device Off'
+    state: null
+automation:
+  conditions:
+    - label: Device State
+      displayType: list
+      list:
+        alternatives:
+          - key: 'on'
+            value: 'LAN Device On'
+            type: active
+          - key: 'off'
+            value: 'LAN Device Off'
+            type: inactive
+        value: switch.value
+  actions: []
+id: partyvoice23922.devstate
+version: 1

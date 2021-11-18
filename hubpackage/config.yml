@@ -1,0 +1,5 @@
+name: 'LAN Device Monitor'
+packageKey: 'landevmonv1'
+permissions:
+    lan: {}
+    discovery: {}

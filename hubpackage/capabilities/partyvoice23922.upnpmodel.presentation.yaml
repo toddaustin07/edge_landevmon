@@ -1,0 +1,14 @@
+dashboard:
+  states: []
+  actions: []
+  basicPlus: []
+detailView:
+  - label: Model
+    displayType: state
+    state:
+      label: '{{model.value}}'
+automation:
+  conditions: []
+  actions: []
+id: partyvoice23922.upnpmodel
+version: 1

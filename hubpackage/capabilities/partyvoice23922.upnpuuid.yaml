@@ -1,0 +1,17 @@
+id: partyvoice23922.upnpuuid
+version: 1
+status: proposed
+name: upnpuuid
+attributes:
+  uuid:
+    schema:
+      type: object
+      properties:
+        value:
+          type: string
+          maxLength: 36
+      additionalProperties: false
+      required:
+        - value
+    enumCommands: []
+commands: {}

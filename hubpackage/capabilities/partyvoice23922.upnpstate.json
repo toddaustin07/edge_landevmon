@@ -1,0 +1,24 @@
+{
+    "id": "partyvoice23922.upnpstate",
+    "version": 1,
+    "status": "proposed",
+    "name": "upnpstate",
+    "attributes": {
+        "state": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value"
+                ]
+            },
+            "enumCommands": []
+        }
+    },
+    "commands": {}
+}

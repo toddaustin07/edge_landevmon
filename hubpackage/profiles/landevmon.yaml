@@ -1,0 +1,72 @@
+name: landevmon.v1
+components:
+- id: main
+  capabilities:
+    - id: switch
+      version: 1
+    - id: partyvoice23922.upnpstate
+      version: 1
+    - id: partyvoice23922.moncontrol
+      version: 1
+    - id: "partyvoice23922.upnpname"
+      version: 1
+    - id: "partyvoice23922.upnpmodel"
+      version: 1
+    - id: "partyvoice23922.upnpuuid"
+      version: 1
+    - id: "partyvoice23922.upnpaddr"
+      version: 1
+    - id: "partyvoice23922.createanother"
+      version: 1
+  categories:
+    - name: Switch
+metadata:
+  vid: 1d51287a-681e-35c4-91d6-75ac9cf904b3
+  mnmn: SmartThingsCommunity
+preferences:
+  - title: "IP Address"
+    name: ipaddr
+    description: "Device IP Address"
+    required: false
+    preferenceType: string
+    definition:
+      stringType: text
+      minLength: 7
+      maxLength: 15
+      default: "192.168.n.n"
+  - title: "UUID"
+    name: uuid
+    description: "Device UUID"
+    required: false
+    preferenceType: string
+    definition:
+      stringType: text
+      minLength: 36
+      maxLength: 36
+      default: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  - title: "Polling Interval"
+    name: poll
+    description: "Number of seconds (10 minimum)"
+    required: true
+    preferenceType: integer
+    definition:
+      minimum: 10
+      maximum: 86400
+      default: 20
+  - title: "Dashboard Icon"
+    name: devicon
+    description: "Dashboard Icon"
+    required: false
+    preferenceType: enumeration
+    definition:
+      options:
+        switch: "switch"
+        contact: "contact"
+        plug: "plug"
+        tv: "TV"
+        audio: "audio"
+        light: "light"
+        hub: "hub"
+        router: "router"
+        other: "other"
+      default: switch

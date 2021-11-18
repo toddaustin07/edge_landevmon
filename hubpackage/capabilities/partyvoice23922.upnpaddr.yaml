@@ -1,0 +1,17 @@
+id: partyvoice23922.upnpaddr
+version: 1
+status: proposed
+name: upnpaddr
+attributes:
+  addr:
+    schema:
+      type: object
+      properties:
+        value:
+          type: string
+          maxLength: 20
+      additionalProperties: false
+      required:
+        - value
+    enumCommands: []
+commands: {}

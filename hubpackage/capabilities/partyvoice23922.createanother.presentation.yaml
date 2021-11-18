@@ -1,0 +1,15 @@
+dashboard:
+  states: []
+  actions: []
+  basicPlus: []
+detailView:
+  - label: Create new device
+    displayType: pushButton
+    pushButton:
+      command: push
+    state: null
+automation:
+  conditions: []
+  actions: []
+id: partyvoice23922.createanother
+version: 1
