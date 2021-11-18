@@ -8,7 +8,7 @@ For the device you want to monitor, you'll need to know if it is a UPnP device, 
 - If your device is simple, without multiple embedded logical devices/services, then all you need to know is the IP address of the device.  
 - If it is a more complex device with multiple logical devices/services with their own unique UUID, then you'll need to know the UUID of the device/service you want to monitor.
 
-You will configure the monitor to find your device either via IP address or UUID.  Note that if you use IP address, it's best that its a **static** IP address, otherwise it could change if your device goes off line or your router reboots.  If you cannot define a static IP address, then it would be best to use UUID.
+You will configure the monitor to find your device either via IP address or UUID.  Note that if you use IP address, it's best that it is a **static** IP address, otherwise it could change if your device goes off line or your router reboots.  If you cannot define a static IP address, then it would be best to use UUID.
 
 ## Instructions
 Once the driver is installed to the hub, use the mobile app to do an Add device/Scan nearby.  A new device will be created in the 'No room assigned' room called **LAN Device Monitor**.
