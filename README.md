@@ -24,7 +24,7 @@ Set either the IP Address or UUID fields for you device.  Note that if you confi
 - A valid UUID must be in the form **xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx** where 'x' is a hexidecimal character (0-9, a-f or A-F)
 
 #### Polling
-You can configure how often, in seconds, the device is polled to ensure it is online.  The minimum interval is 10 seconds, and the default is 20 seconds.  The more frequent you poll, the more potential LAN traffic the driver will be generating - how much will depend on the device.  Better behaved devices that implement the full and proper SSDP protocol will be more responsive and require less LAN traffic.
+You can configure how often, in seconds, the device is polled to determine if it is online.  The minimum interval is 10 seconds, and the default is 20 seconds.  The more frequent you poll, the more potential LAN traffic the driver will be generating - how much will depend on the device.  Better behaved devices that implement the full and proper SSDP protocol will be more responsive and require less LAN traffic.
 
 ### Usage
 #### Dashboard
