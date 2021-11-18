@@ -15,6 +15,9 @@ Once the driver is installed to the hub, use the mobile app to do an Add device/
 
 ### Configuration
 Go to the device details screen in the mobile app and go to device settings by tapping the 3 vertical dot menu in the upper right corner, and then tap **Settings**.
+#### Dashboard Icon
+Select an icon from the list to represent your LAN device.  Note that it can take a few minutes or app closure & reopen before the new icon is displayed.
+#### Target Device Identifier
 Set either the IP Address or UUID fields for you device.  Note that if you configure both these fields with valid values, UUID will be used.
 
 - A valid IP address must be in the form **nnn.nnn.nnn.nnn** where 'n' is a numeric digit and 'nnn' is less than 255; do *not* include port number
