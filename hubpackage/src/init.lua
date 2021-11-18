@@ -64,7 +64,7 @@ local newly_added = {}
 local rediscover_timer
 local unfoundlist = {}
 
-local initialize = false
+local initialized = false
 
 local devcounter = 1
 
@@ -326,7 +326,7 @@ end
 
 local function handle_monitor_control(driver, device, command)
 
-  log.info(string.format("Monitor control switched to [%s | %s]", command.command, command.args.value))
+  log.info(string.format("Monitor control switched to %s", command.args.value))
   
   device:emit_event(cap_moncontrol.switch(command.args.value))
   
@@ -405,6 +405,9 @@ end
 local function device_init(driver, device)
   
   log.debug(string.format('INIT handler for %s', device.label))
+  
+  initialized = true
+  device:set_field('upnpinit', false)
 
   if device:get_field('upnpmon') == true then
     device:emit_event(cap_moncontrol.switch('Monitoring On'))
@@ -436,7 +439,6 @@ local function device_added (driver, device)
 
   log.info(string.format('ADDED handler: <%s (%s)> successfully added; device_network_id = %s', device.id, device.label, id))
   
-  device:set_field('upnpinit', false)
   device:set_field('upnpmon', false, { ['persist'] = true })
   
   device:emit_event(cap_upnpstate.state('-unknown-'))
@@ -485,11 +487,31 @@ local function handler_infochanged(driver, device, event, args)
       return
     elseif args.old_st_store.preferences.poll ~= device.preferences.poll then
       return
+      
     elseif args.old_st_store.preferences.devicon ~= device.preferences.devicon then
-      return
+      log.debug ('Icon changed to', device.preferences.devicon)
+      local iconprofile = {
+                            ['switch'] = 'landevmon.v1',
+                            ['other'] = 'landevmon_other.v1',
+                            ['tv'] = 'landevmon_tv.v1',
+                            ['plug'] = 'landevmon_plug.v1',
+                            ['audio'] = 'landevmon_audio.v1',
+                            ['router'] = 'landevmon_router.v1',
+                            ['light'] = 'landevmon_light.v1',
+                            ['contact'] = 'landevmon_contact.v1',
+                          }
+                      
+      local newprofile = iconprofile[device.preferences.devicon]
+      if newprofile then
+        device:try_update_metadata({profile = newprofile})
+      else
+        log.error ('Invalid icon; profile not updated')
+      end
+      
     else
       -- Assume driver is restarting - shutdown everything
-      log.debug ('****** DRIVER RESTART ASSUMED - POSSIBLE CRASH IMMINENT! ******')
+      log.debug ('****** DRIVER RESTART ASSUMED - WILL IT HANG??! ******')
+      log.debug ('Profile:', device.profile.id)
       --upnp.reset(driver)
       
     end

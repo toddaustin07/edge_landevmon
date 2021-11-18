@@ -1,4 +1,4 @@
-name: landevmon.v1
+name: landevmon_light.v1
 components:
 - id: main
   capabilities:
@@ -23,7 +23,7 @@ components:
 metadata:
   vid: 1d51287a-681e-35c4-91d6-75ac9cf904b3
   mnmn: SmartThingsCommunity
-  ocfDeviceType: oic.d.switch
+  ocfDeviceType: oic.d.light
 preferences:
   - title: "Dashboard Icon"
     name: devicon
