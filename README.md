@@ -28,7 +28,7 @@ You can configure how often, in seconds, the device is polled to determine if it
 
 ### Usage
 #### Dashboard
-The device card will reflect the on/off status of the device
+The device card will show your selected icon, and reflect the on/off status of the device
 
 #### Device Details Screen
 The device details screen contains device information plus actions the user can take.
