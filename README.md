@@ -42,7 +42,7 @@ Monitoring can be suspended for a currently monitored device by turning the swit
 Monitoring can be turned back on at any time as long as there is a valid IP address or UUID configured.
 
 **Note on configuration changes:**
-- Before any changes to configuration settings take effect (new IP address, UUID or different polling frequency), device monitoring must first be turned off, and then back on.
+- Before any changes to configuration settings take effect (new IP address, UUID or different polling frequency), device monitoring must first be turned off, and then back on.  Icon changes will happen without turning device monitoring off and on, but may not show right away.
 ##### Create new device button
 At the bottom of the device details screen, there is a button to create another virtual device, which you can then configure just as described above.  Each additional device created will also have this button, so new devices can be created from any LAN monitoring device.
 
