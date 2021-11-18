@@ -32,7 +32,9 @@ The device details screen contains device information plus actions the user can 
 ##### Device Info
 Starting at the top, the device details screen will show information about the device currently being monitored, including its online/offline status, name & model as reported by the device, UUID, and IP address.  Note that these fields will be grayed-out when monitoring is turned off.
 ##### Monitoring Switch
-Following the device info fields is a switch to turn monitoring on and off.  There must be a valid IP address or UUID configured or any attempts to switch on monitoring will result in the switch immediately turning off again. Monitoring can be suspended for a currently monitored device by turning the switch off at any time.  This will result in the info fields getting grayed-out, the device status field set to '-unknown-', and the dashboard state will show 'off'.  The switch capability used for automation conditions will also be set to **off**, so be aware of this when setting up automations.
+Following the device info fields is a switch to turn monitoring on and off.  There must be a valid IP address or UUID configured or any attempts to switch on monitoring will result in the switch immediately turning off again. 
+
+Monitoring can be suspended for a currently monitored device by turning the switch off at any time.  This will result in the info fields getting grayed-out, the device status field set to '-unknown-', and the dashboard state will show 'off'.  The switch capability used for automation conditions will also be set to **off**, so be aware of this when setting up automations.
 
 Monitoring can be turned back on at any time as long as there is a valid IP address or UUID configured.
 
