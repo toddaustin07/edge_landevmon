@@ -499,6 +499,8 @@ local function handler_infochanged(driver, device, event, args)
                             ['router'] = 'landevmon_router.v1',
                             ['light'] = 'landevmon_light.v1',
                             ['contact'] = 'landevmon_contact.v1',
+                            ['dvd'] = 'landevmon_dvd.v1',
+                            ['remote'] = 'landevmon_remote.v1'
                           }
                       
       local newprofile = iconprofile[device.preferences.devicon]

@@ -38,6 +38,8 @@ preferences:
         tv: "TV"
         audio: "audio"
         light: "light"
+        dvd: "dvd"
+        remote: "remote"
         router: "router"
         other: "other"
       default: switch
