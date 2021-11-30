@@ -1,9 +1,9 @@
 # LAN Device Monitor for SmartThings Edge
 
-This is a SmartThings Edge driver for creating virtual SmartThings devices that monitor the online/offline status of LAN devices that respond to SSDP requests.
+This is a SmartThings Edge driver for creating virtual SmartThings devices that monitor the online/offline status of LAN devices.
 
 ### What you will need to know
-For the device you want to monitor, you'll need to know if it is a UPnP device, or if it at least responds to SSDP discovery requests.  If you don't know, you can simply try it and see if it works.  Alternatively you can use a UPnP explorer on your local LAN to discover all your monitorable devices.  One such explorer is available as SmartThings Edge driver (Channel: https://api.smartthings.com/invitation-web/accept?id=4f17fc7e-7a44-4826-884d-31117037c08d).
+For the device you want to monitor, you'll need to know if it is a UPnP device (see https://openconnectivity.org/upnp-specs/UPnP-arch-DeviceArchitecture-v2.0-20200417.pdf), or if it at least responds to SSDP discovery requests.  If you don't know, you can simply try it and see if it works.  Alternatively you can use a UPnP explorer on your local LAN to discover all your monitorable devices.  One such explorer is available as a SmartThings Edge driver (Channel: https://api.smartthings.com/invitation-web/accept?id=4f17fc7e-7a44-4826-884d-31117037c08d).
 
 - If your device is simple, without multiple embedded logical devices/services, then all you need to know is the IP address of the device.  
 - If it is a more complex device with multiple logical devices/services with their own unique UUID, then you'll need to know the UUID of the device/service you want to monitor.

@@ -14,10 +14,9 @@
 
   DESCRIPTION
   
-  This is an example SmartThings Edge Driver using the generalized UPnP device library.  It will 
-  discover, subscribe to, send commands to, and monitor online/offline status of, UPnP devices found on the network
-
-  ** This code borrows liberally from Samsung SmartThings sample LAN drivers; credit to Patrick Barrett **
+  SmartThings Edge Driver to monitor online/offline status of LAN devices that support UPnP/SSDP.
+  
+  Uses a modified version of my UPnP library for SmartThings Edge.
 
 --]]
 
@@ -528,7 +527,7 @@ local function lan_info_changed_handler(driver, hub_ipv4)
   if driver.listen_ip == nil or hub_ipv4 ~= driver.listen_ip then
     log.info("Hub IP address has changed, restarting eventing server and resubscribing")
     
-    upnp.reset(driver)                                                  -- reset device monitor and subscription event server
+    upnp.reset(driver)
   end
 end
 
@@ -591,8 +590,6 @@ thisDriver = Driver("landevmonDriver", {
     }
   }
 })
-
-log.debug("**** Driver Script Start ****")
 
 log.info("LAN Device Monitor Driver v1 started")
 
