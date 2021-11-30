@@ -6,7 +6,7 @@ This is a SmartThings Edge driver for creating virtual SmartThings devices that 
 For the device you want to monitor, you'll need to know if it is a UPnP device, or if it at least responds to SSDP discovery requests.  If you don't know, you can simply try it and see if it works.  Alternatively you can use a UPnP explorer on your local LAN to discover all your monitorable devices.  One such explorer is available as SmartThings Edge driver (Channel: https://api.smartthings.com/invitation-web/accept?id=4f17fc7e-7a44-4826-884d-31117037c08d).
 
 - If your device is simple, without multiple embedded logical devices/services, then all you need to know is the IP address of the device.  
-- If it is a more complex device with multiple logical devices/services with their own unique UUID, then you'll need to know the UUID of the device/service you want to monitor.
+- If it is a more complex device with multiple logical devices/services each with their own unique UUID, then you'll need to know the UUID of the device/service you want to monitor.
 
 You will configure the monitor to find your device either via IP address or UUID.  Note that if you use IP address, it's best that it is a **static** IP address, otherwise it could change if your device goes off line or your router reboots.  If you cannot define a static IP address, then it would be best to use UUID.
 
