@@ -61,3 +61,16 @@ A standard switch capability is provided that can be used in automation IF condi
 Generally, device online/offline status should get initialized within 10 seconds of initially turning on monitoring, but it may take longer for some devices - up to 20-30 seconds.
 
 If a device has implemented the full SSDP specification then response times and subsequent updating of device online/offline status will be quick, particularly when the device goes offline.  Well-implemented devices may also report their status more frequently than the polling interval you configure.  So for example, even if you define a polling interval of 15 minutes, the device may choose to report more frequently.  This may be seen in networking equipment devices (routers, range extenders, etc.), which often have very frequent reporting intervals (e.g. every 30-45 seconds).
+
+### Known Issues
+
+The SmartThings Edge platform is still in beta as of November 2021, and as such there are some known bugs.  One of these may affect this driver whenever a driver update is made.  When the the new driver is installed, the following error may be seen several times in the log output:
+```
+Lua: runtime error: [string "cosock"]:296: cosock tried to call socket.select with no sockets and no timeout. this is a bug, please report it
+stack traceback:
+	[C]: in function 'error'
+	[string "cosock"]:296: in field 'run'
+	[string "st.driver"]:743: in method 'run'
+	[string "init.lua"]:596: in main chunk
+```
+Typically this resolves itself after multiple retries, but occasionally it never does.  A reboot of the hub may be necessary to clear it.  If that doesn't work, then the driver will have to be uninstalled and installed again.  Unfortunately this also requires deletion of any devices.
