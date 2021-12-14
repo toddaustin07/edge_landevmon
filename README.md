@@ -2,7 +2,7 @@
 
 This is a SmartThings Edge driver for creating virtual SmartThings devices that monitor the online/offline status of LAN devices.
 
-**Now with Wake on LAN feature!!**
+**Now with Wake-on-LAN control!!** (12/14/21)
 
 ### What you will need to know
 For the device you want to monitor, you'll need to know if it is a UPnP device (see https://openconnectivity.org/upnp-specs/UPnP-arch-DeviceArchitecture-v2.0-20200417.pdf), or if it at least responds to SSDP discovery requests.  If you don't know, you can simply try it and see if it works.  Alternatively you can use a UPnP explorer on your local LAN to discover all your monitorable devices.  One such explorer is available as a SmartThings Edge driver (Channel: https://api.smartthings.com/invitation-web/accept?id=4f17fc7e-7a44-4826-884d-31117037c08d).
