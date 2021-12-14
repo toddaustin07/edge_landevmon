@@ -2,6 +2,8 @@
 
 This is a SmartThings Edge driver for creating virtual SmartThings devices that monitor the online/offline status of LAN devices.
 
+**Now with Wake on LAN feature!!**
+
 ### What you will need to know
 For the device you want to monitor, you'll need to know if it is a UPnP device (see https://openconnectivity.org/upnp-specs/UPnP-arch-DeviceArchitecture-v2.0-20200417.pdf), or if it at least responds to SSDP discovery requests.  If you don't know, you can simply try it and see if it works.  Alternatively you can use a UPnP explorer on your local LAN to discover all your monitorable devices.  One such explorer is available as a SmartThings Edge driver (Channel: https://api.smartthings.com/invitation-web/accept?id=4f17fc7e-7a44-4826-884d-31117037c08d).
 
@@ -29,8 +31,14 @@ Set either the IP Address or UUID fields for you device.  Note that if you confi
 - A valid IP address must be in the form **nnn.nnn.nnn.nnn** where 'n' is a numeric digit and 'nnn' is less than 255; do *not* include port number
 - A valid UUID must be in the form **xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx** where 'x' is a hexidecimal character (0-9, a-f or A-F)
 
-#### Polling
+#### Polling Interval
 You can configure how often, in seconds, the device is polled to determine if it is online.  The minimum interval is 10 seconds, and the default is 20 seconds.  The more frequent you poll, the more potential LAN traffic the driver will be generating - how much will depend on the device.  Better behaved devices that implement the full and proper SSDP protocol will be more responsive and require less LAN traffic.
+
+#### MAC Address
+If you want to use the Wake-on-LAN feature, you must configure the MAC address of the device you want to control.
+
+#### Broadcast Address
+If you want to use the Wake-on-LAN feature, you can modify this address, but normally this should be left to the default of 255.255.255.255:7.  If an alternate address is configured, the IP address must end in .255, and the port number must be a single digit - typically 7 or 9.
 
 ### Usage
 #### Dashboard
@@ -50,6 +58,10 @@ Monitoring can be turned back on at any time as long as there is a valid IP addr
 **Note on configuration changes:**
 - Before any changes to configuration settings take effect (new IP address, UUID or different polling frequency), device monitoring must first be turned off, and then back on.  
 - Icon changes will happen without turning device monitoring off and on, but may not show right away.
+
+#### Wake on LAN
+This button is used to send a Wake-on-LAN 'magic packet' to the device MAC address configured in Settings.  The device must be configured to enable this feature, and your LAN router must be able to forward broadcast messages for the configured port number.
+
 ##### Create new device button
 At the bottom of the device details screen, there is a button to create another virtual device, which you can then configure just as described above.  Each additional device created will also have this button, so new devices can be created from any LAN monitoring device.
 
