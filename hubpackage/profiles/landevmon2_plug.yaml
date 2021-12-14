@@ -1,4 +1,4 @@
-name: landevmon_audio.v1
+name: landevmon_plug.v2
 components:
 - id: main
   capabilities:
@@ -16,14 +16,16 @@ components:
       version: 1
     - id: "partyvoice23922.upnpaddr"
       version: 1
+    - id: "partyvoice23922.wakeonlan"
+      version: 1  
     - id: "partyvoice23922.createanother"
       version: 1
   categories:
     - name: Switch
 metadata:
-  vid: 1d51287a-681e-35c4-91d6-75ac9cf904b3
+  vid: 1f4ed216-e02f-3d63-a18d-f35414531ebd
   mnmn: SmartThingsCommunity
-  ocfDeviceType: oic.d.networkaudio
+  ocfDeviceType: oic.d.smartplug
 preferences:
   - title: "Dashboard Icon"
     name: devicon
@@ -72,3 +74,23 @@ preferences:
       minimum: 10
       maximum: 86400
       default: 20
+  - title: "MAC Address (WOL)"
+    name: macaddr
+    description: "Device MAC Address"
+    required: false
+    preferenceType: string
+    definition:
+      stringType: text
+      minLength: 17
+      maxLength: 17
+      default: "xx:xx:xx:xx:xx:xx"
+  - title: "Broadcast Address (WOL)"
+    name: bcastaddr
+    description: "IP:port Address"
+    required: false
+    preferenceType: string
+    definition:
+      stringType: text
+      minLength: 11
+      maxLength: 17
+      default: "255.255.255.255:7"

@@ -30,6 +30,8 @@ local log = require "log"
 -- UPnP library
 local upnp = require "UPnP"        
 
+local wol = require "wakeonlan"
+
 -- Custom capabilities
 local capdefs = require "capabilitydefs"
 
@@ -51,6 +53,9 @@ capabilities["partyvoice23922.upnpuuid"] = cap_upnpuuid
 local cap_upnpaddr = capabilities.build_cap_from_json_string(capdefs.upnpaddr_cap)
 capabilities["partyvoice23922.upnpaddr"] = cap_upnpaddr
 
+local cap_wol = capabilities.build_cap_from_json_string(capdefs.wol_cap)
+capabilities["partyvoice23922.wakeonlan"] = cap_wol
+
 local cap_createdev = capabilities.build_cap_from_json_string(capdefs.createdev_cap)
 capabilities["partyvoice23922.createanother"] = cap_createdev
 
@@ -66,6 +71,19 @@ local unfoundlist = {}
 local initialized = false
 
 local devcounter = 1
+
+local profiles =  {
+                    ['switch'] = 'landevmon.v2',
+                    ['other'] = 'landevmon_other.v2',
+                    ['tv'] = 'landevmon_tv.v2',
+                    ['plug'] = 'landevmon_plug.v2',
+                    ['audio'] = 'landevmon_audio.v2',
+                    ['router'] = 'landevmon_router.v2',
+                    ['light'] = 'landevmon_light.v2',
+                    ['contact'] = 'landevmon_contact.v2',
+                    ['cam'] = 'landevmon_cam.v2',
+                    ['remote'] = 'landevmon_remote.v2'
+                  }
 
 
 local function validate_ipaddress(ip)
@@ -120,9 +138,19 @@ end
 local function update_ST_capattrs(device)
   
   local upnpdev = device:get_field("upnpdevice")
+  local devmeta = upnpdev:devinfo()
+  local name, model
   
-  device:emit_event(cap_upnpname.name(upnpdev:devinfo().friendlyName))
-  device:emit_event(cap_upnpmodel.model(upnpdev:devinfo().modelName))
+  if devmeta then
+    name = devmeta.friendlyName
+    model = devmeta.modelName
+  else
+    name = 'unknown'
+    model = 'unknown'
+  end
+  
+  device:emit_event(cap_upnpname.name(name))
+  device:emit_event(cap_upnpmodel.model(model))
   device:emit_event(cap_upnpuuid.uuid(upnpdev.uuid))
   device:emit_event(cap_upnpaddr.addr(upnpdev.ip .. ':' .. tostring(upnpdev.port)))
   
@@ -208,7 +236,14 @@ local function discover(device, searchtarget, reset)
     
                     local id = upnpdev.uuid
                     local ip = upnpdev.ip
-                    local name = upnpdev:devinfo().friendlyName
+                    local devmeta = upnpdev:devinfo()
+                    local name
+                    
+                    if devmeta then
+                      name = devmeta.friendlyName
+                    else
+                      name = 'unknown'
+                    end
                     
                     if not known_devices[id] and not found_devices[id] then
                       found_devices[id] = true
@@ -291,17 +326,15 @@ local function proc_rediscover()
 end
 
 
-local function create_another_device(driver, counter)
+local function create_a_device(driver, counter)
 
-  log.info("Creating additional LAN monitor device")
-  
   local MFG_NAME = 'SmartThings Community'
   local VEND_LABEL = string.format('LAN Device Monitor #%d', counter)
   local MODEL = 'landevmon_v1'
   local ID = 'landevmon' .. '_' .. socket.gettime()
-  local PROFILE = 'landevmon.v1'
+  local PROFILE = profiles['switch']
   
-  log.debug (string.format('Creating additional device: label=<%s>, id=<%s>', VEND_LABEL, ID))
+  log.debug (string.format('Creating landevmon device: label=<%s>, id=<%s>', VEND_LABEL, ID))
 
   -- Create device
 
@@ -315,7 +348,7 @@ local function create_another_device(driver, counter)
                               vendor_provided_label = VEND_LABEL,
                             }
                       
-  assert (driver:try_create_device(create_device_msg), "failed to create additional landevmon device")
+  assert (driver:try_create_device(create_device_msg), "failed to create landevmon device")
 
 end
 
@@ -391,7 +424,18 @@ local function handle_createdev(driver, device, command)
   
   devcounter = devcounter + 1
   
-  create_another_device(driver, devcounter)
+  create_a_device(driver, devcounter)
+
+end
+
+
+local function handle_wol(driver, device, command)
+
+  log.debug ('Wake on LAN requested; comand=', command.command)
+  
+  wol.do_wakeonlan(device.preferences.macaddr, device.preferences.bcastaddr)
+
+  log.debug ('Exiting WOL handler')
 
 end
 
@@ -486,23 +530,17 @@ local function handler_infochanged(driver, device, event, args)
       return
     elseif args.old_st_store.preferences.poll ~= device.preferences.poll then
       return
+    elseif args.old_st_store.preferences.macaddr ~= device.preferences.macaddr then
+      log.info(string.format('MAC Address changed to %s', device.preferences.macaddr))
+      return
+    elseif args.old_st_store.preferences.bcastaddr ~= device.preferences.bcastaddr then
+      log.info(string.format('Broadcast Address changed to %s', device.preferences.bcastaddr))
+      return
       
     elseif args.old_st_store.preferences.devicon ~= device.preferences.devicon then
       log.debug ('Icon changed to', device.preferences.devicon)
-      local iconprofile = {
-                            ['switch'] = 'landevmon.v1',
-                            ['other'] = 'landevmon_other.v1',
-                            ['tv'] = 'landevmon_tv.v1',
-                            ['plug'] = 'landevmon_plug.v1',
-                            ['audio'] = 'landevmon_audio.v1',
-                            ['router'] = 'landevmon_router.v1',
-                            ['light'] = 'landevmon_light.v1',
-                            ['contact'] = 'landevmon_contact.v1',
-                            ['dvd'] = 'landevmon_dvd.v1',
-                            ['remote'] = 'landevmon_remote.v1'
-                          }
-                      
-      local newprofile = iconprofile[device.preferences.devicon]
+      
+      local newprofile = profiles[device.preferences.devicon]
       if newprofile then
         device:try_update_metadata({profile = newprofile})
       else
@@ -510,10 +548,8 @@ local function handler_infochanged(driver, device, event, args)
       end
       
     else
-      -- Assume driver is restarting - shutdown everything
-      log.debug ('****** DRIVER RESTART ASSUMED - WILL IT HANG??! ******')
-      log.debug ('Profile:', device.profile.id)
-      --upnp.reset(driver)
+      -- Assume driver is restarting 
+      log.debug ('****** DRIVER RESTART ASSUMED ******')
       
     end
   end
@@ -536,33 +572,13 @@ local function discovery_handler(driver, _, should_continue)
 
   if not initialized then
   
-    log.info("Creating device")
-    
-    local MFG_NAME = 'SmartThings Community'
-    local VEND_LABEL = 'LAN Device Monitor'
-    local MODEL = 'landevmon_v1'
-    local ID = 'landevmon' .. '_' .. socket.gettime()
-    local PROFILE = 'landevmon.v1'
-
-    -- Create virtual SmartThings device
-	
-		local create_device_msg = {
-																type = "LAN",
-																device_network_id = ID,
-																label = VEND_LABEL,
-																profile = PROFILE,
-																manufacturer = MFG_NAME,
-																model = MODEL,
-																vendor_provided_label = VEND_LABEL,
-															}
-												
-		assert (driver:try_create_device(create_device_msg), "failed to create device")
-    
-    log.debug("Exiting device creation")
+    create_a_device(driver, 1)
     
   else
-    log.info ('Device already created')
+    log.info ('Discovery handler: already initialized; no action')
   end
+  
+  log.debug("Exiting device discovery")
 
 end
 
@@ -587,10 +603,13 @@ thisDriver = Driver("landevmonDriver", {
     },
     [cap_createdev.ID] = {
       [cap_createdev.commands.push.NAME] = handle_createdev,
+    },
+    [cap_wol.ID] = {
+      [cap_wol.commands.push.NAME] = handle_wol,
     }
   }
 })
 
-log.info("LAN Device Monitor Driver v1 started")
+log.info("LAN Device Monitor Driver v1.1 started")
 
 thisDriver:run()

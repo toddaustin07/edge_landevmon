@@ -1,0 +1,22 @@
+dashboard:
+  states: []
+  actions: []
+  basicPlus: []
+detailView:
+  - label: Wake on LAN
+    displayType: pushButton
+    pushButton:
+      command: push
+    state: null
+automation:
+  conditions: []
+  actions:
+    - label: Wake on LAN
+      displayType: list
+      list:
+        alternatives:
+          - key: 'push'
+            value: 'push'
+            type: active
+id: partyvoice23922.wakeonlan
+version: 1

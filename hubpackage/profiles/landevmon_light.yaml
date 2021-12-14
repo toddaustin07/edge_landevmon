@@ -38,7 +38,7 @@ preferences:
         tv: "TV"
         audio: "audio"
         light: "light"
-        dvd: "dvd"
+        cam: "camera"
         remote: "remote"
         router: "router"
         other: "other"

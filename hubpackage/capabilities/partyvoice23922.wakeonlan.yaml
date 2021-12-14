@@ -1,0 +1,10 @@
+id: partyvoice23922.wakeonlan
+version: 1
+status: proposed
+name: wakeonlan
+ephemeral: false
+attributes: {}
+commands:
+  push:
+    name: push
+    arguments: []

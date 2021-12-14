@@ -77,11 +77,15 @@ local function set_meta_attrs(deviceobj, headers)
   deviceobj.location = loc
   deviceobj.ip = ip
   deviceobj.port = port
-  
-  if not deviceobj.description.URLBase then
-    deviceobj.URLBase = string.match(headers['location'], '^(http://[%d.:]*)')
+
+  if deviceobj.description then                                         -- *****
+    if not deviceobj.description.URLBase then
+      deviceobj.URLBase = string.match(headers['location'], '^(http://[%d.:]*)')
+    else
+      deviceobj.URLBase = deviceobj.description.URLBase
+    end
   else
-    deviceobj.URLBase = deviceobj.description.URLBase
+    deviceobj.URLBase = string.match(headers['location'], '^(http://[%d.:]*)')
   end
   
   deviceobj.bootid = headers["bootid.upnp.org"]

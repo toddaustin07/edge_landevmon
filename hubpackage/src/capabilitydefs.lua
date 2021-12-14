@@ -176,6 +176,22 @@ local upnpaddr_cap = [[
 }
 ]]
 
+local wol_cap = [[
+{
+    "id": "partyvoice23922.wakeonlan",
+    "version": 1,
+    "status": "proposed",
+    "name": "wakeonlan",
+    "attributes": {},
+    "commands": {
+        "push": {
+            "name": "push",
+            "arguments": []
+        }
+    }
+}
+]]
+
 local createdev_cap = [[
 {
     "id": "partyvoice23922.createanother",
@@ -200,5 +216,6 @@ return {
 	upnpuuid_cap = upnpuuid_cap,
 	upnpaddr_cap = upnpaddr_cap,
 	createdev_cap = createdev_cap,
+    wol_cap = wol_cap,
 }
 	
