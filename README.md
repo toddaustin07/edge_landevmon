@@ -13,7 +13,7 @@ You will configure the monitor to find your device either via **IP address** or 
 - If it is a more complex device with multiple logical devices/services each with their own unique UUID, then you'll need to configure the specific UUID of the sub-device/service you want to monitor.
 
 #### Wake-on-LAN
-This feature is *not* part of the SSDP discovery protocol.  It is a separate feature supported at the network hardware interface of the device.  Just because you can discover and monitor a device, does not mean that WOL will work with that device.  And the reverse is also true:  just because your device supports WOL, doesn't mean it can be discovered and monitored.
+This feature is *not* part of the UPnP or SSDP discovery protocol.  It is a separate feature supported at the network hardware interface of the device.  Just because you can discover and monitor a device, does not mean that WOL will work with that device.  And the reverse is also true:  just because your device supports WOL, doesn't mean it can be discovered and monitored.
 
 ## Instructions
 ### Installing the Driver
