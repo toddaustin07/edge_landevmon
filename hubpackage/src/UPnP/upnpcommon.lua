@@ -172,7 +172,7 @@ local function tablefind(t, path)
 end
 
 local function is_array(t)
-
+  if type(t) ~= "table" then return false end
   local i = 0
   for _ in pairs(t) do
     i = i + 1

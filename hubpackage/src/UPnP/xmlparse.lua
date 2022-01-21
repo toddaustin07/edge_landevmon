@@ -42,7 +42,7 @@ local function upnp_description_getservicelist(t)
   
     local servicelist = {}
     
-    if not util.is_array(t.service) then
+    if type(t.service) == "table" and not util.is_array(t.service) then
       
       servicelist[1] = {}
       for key, value in pairs(t.service) do
@@ -76,11 +76,11 @@ end
 -- This function is called recursively for subdevices within subdevices
 local function upnp_description_getsubdevicelist(t)
 
-  if (t ~= nil) then
+  if t ~= nil then
   
     local subdevices = {}
   
-    local devicelist = t.device
+    local devicelist = t.device or {}
     
     if devicelist ==  nil then
       return {}
@@ -217,7 +217,7 @@ function parseServiceXML(response)
   
   if parsed_xml.scpd.actionList ~= nil then
   
-    local actionlist = parsed_xml.scpd.actionList.action
+    local actionlist = parsed_xml.scpd.actionList.action or {}
     
     if util.is_array(actionlist) then
     
@@ -230,7 +230,7 @@ function parseServiceXML(response)
           if key == 'argumentList' then
           
             servicetable.actions[index].arguments = {}
-            argumentlist = actionlist[index].argumentList.argument
+            argumentlist = actionlist[index].argumentList.argument or {}
           
             if util.is_array(argumentlist) then
               for index2, data2 in ipairs(argumentlist) do
@@ -265,7 +265,7 @@ function parseServiceXML(response)
         if key == 'argumentList' then
         
           servicetable.actions[1].arguments = {}
-          argumentlist = actionlist.argumentList.argument
+          argumentlist = actionlist.argumentList.argument or {}
         
           if util.is_array(argumentlist) then
             for index2, data2 in ipairs(argumentlist) do
@@ -295,7 +295,7 @@ function parseServiceXML(response)
   
   servicetable.states = {}
 
-  local statelist = parsed_xml.scpd.serviceStateTable.stateVariable
+  local statelist = parsed_xml.scpd.serviceStateTable.stateVariable or {}
   
   if util.is_array(statelist) then
   
