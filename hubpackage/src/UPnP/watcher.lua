@@ -233,10 +233,10 @@ end
   
 -- Channel Hander:  Receive and process discovery response messages
 local function watch_multicast(_, sock)
-
+  local data, rip
   repeat
 
-    local data, rip, _ = sock:receivefrom()
+    data, rip, _ = sock:receivefrom()
     
     if data and (rip ~= 'timeout') then
     
